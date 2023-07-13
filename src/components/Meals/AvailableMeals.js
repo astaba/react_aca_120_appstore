@@ -30,16 +30,18 @@ const STATIC_MEALS = [
   },
 ];
 
-export default function AvailableMeals() {
+function AvailableMeals() {
+  const mealList = STATIC_MEALS.map((meal) => <MealItem key={meal.id} {...meal} />);
+
   return (
     <section className={classes.meals}>
       <Card>
         <ul>
-          {STATIC_MEALS.map((meal) => (
-            <MealItem key={meal.id} {...meal} />
-          ))}
+          {mealList}
         </ul>
       </Card>
     </section>
   );
 }
+
+export default AvailableMeals;
