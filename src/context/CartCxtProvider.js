@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import cartContext from "./cart-context";
+import CartContext from "./cart-context";
 
 const INITIAL_CART_ITEMS = {
   items: [],
@@ -95,7 +95,7 @@ const cartReducer = (state, action) => {
   // return INITIAL_CART_ITEMS;
 };
 
-export default function CartContextProvider(props) {
+export default function CartCxtProvider({ children }) {
   const [cartState, dispatchCart] = useReducer(cartReducer, INITIAL_CART_ITEMS);
 
   const addItem = (item) => {
@@ -105,7 +105,7 @@ export default function CartContextProvider(props) {
     dispatchCart({ type: "REMOVE", payload: id, });
   };
 
-  const cartContextValue = {
+  const cartCtxValue = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem,
@@ -113,8 +113,8 @@ export default function CartContextProvider(props) {
   };
 
   return (
-    <cartContext.Provider value={cartContextValue}>
-      {props.children}
-    </cartContext.Provider>
+    <CartContext.Provider value={cartCtxValue}>
+      {children}
+    </CartContext.Provider>
   );
 }

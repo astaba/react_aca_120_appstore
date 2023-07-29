@@ -31,13 +31,12 @@ const STATIC_MEALS = [
 ];
 
 function AvailableMeals() {
-  const mealList = STATIC_MEALS.map((meal) => <MealItem key={meal.id} {...meal} />);
-
+  // const mealList = STATIC_MEALS.map((meal) => <MealItem key={meal.id} {...meal} />);
   return (
     <section className={classes.meals}>
       <Card>
         <ul>
-          {mealList}
+          {STATIC_MEALS.map((meal) => <MealItem key={meal.id} {...meal} />)}
         </ul>
       </Card>
     </section>

@@ -5,7 +5,7 @@ import useCartContext from "../../context/useCartContext";
 
 export default function HeaderCartButton({ onCartDisplay: displayCart, }) {
 const [isAnimated, setIsAnimated] = useState(false)
- const { items, ...cartContextValue } = useCartContext();
+ const { items, ...cartCtxValue } = useCartContext();
 //  const totalQuantity = items.reduce((currentItem, nextItem) => {
 //   return currentItem.quantity + nextItem.quantity;
 //  })

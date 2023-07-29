@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import classes from "./Modal.module.css";
 
@@ -18,12 +18,15 @@ const modalPortal = document.getElementById("modal-root");
 
 export default function Modal({ onCartDismiss: dismissCart, ...props }) {
   return (
-    <React.Fragment>
-      {ReactDOM.createPortal(<Backdrop onCartDismiss={dismissCart} />, modalPortal)}
+    <Fragment>
+      {ReactDOM.createPortal(
+        <Backdrop onCartDismiss={dismissCart} />,
+        modalPortal
+      )}
       {ReactDOM.createPortal(
         <ModalOverlay>{props.children}</ModalOverlay>,
         modalPortal
       )}
-    </React.Fragment>
+    </Fragment>
   );
 }
