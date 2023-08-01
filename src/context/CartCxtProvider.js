@@ -12,16 +12,16 @@ const cartReducer = (state, action) => {
   let newTotalAmount;
   switch (action.type) {
     case "ADD":
-      itemI = state.items.findIndex(
-         (item) => item.id === action.payload.id
-      );
-      if(itemI === -1) {
+      itemI = state.items.findIndex((item) => item.id === action.payload.id);
+      if (itemI === -1) {
         newItems = state.items.concat(action.payload);
       } else {
         newItems = state.items;
-        newItems[itemI].quantity = state.items[itemI].quantity + action.payload.quantity;
+        newItems[itemI].quantity =
+          state.items[itemI].quantity + action.payload.quantity;
       }
-      newTotalAmount = state.totalAmount + action.payload.price * action.payload.quantity;
+      newTotalAmount =
+        state.totalAmount + action.payload.price * action.payload.quantity;
       newTotalAmount = +newTotalAmount.toFixed(2);
       return {
         items: newItems,
@@ -29,11 +29,11 @@ const cartReducer = (state, action) => {
       };
     case "REMOVE":
       itemI = state.items.findIndex((item) => item.id === action.payload);
-      if(state.items[itemI].quantity === 1) {
-        newItems = state.items.filter((item) => item.id !== action.payload)
+      if (state.items[itemI].quantity === 1) {
+        newItems = state.items.filter((item) => item.id !== action.payload);
       } else {
-      newItems = state.items;
-      newItems[itemI].quantity = state.items[itemI].quantity - 1;
+        newItems = state.items;
+        newItems[itemI].quantity = state.items[itemI].quantity - 1;
       }
       newTotalAmount = state.totalAmount - state.items[itemI].price;
       newTotalAmount = +newTotalAmount.toFixed(2);
@@ -41,6 +41,8 @@ const cartReducer = (state, action) => {
         items: newItems,
         totalAmount: newTotalAmount,
       };
+    case "RESET":
+      return INITIAL_CART_ITEMS;
     default:
       return INITIAL_CART_ITEMS;
   }
@@ -102,7 +104,10 @@ export default function CartCxtProvider({ children }) {
     dispatchCart({ type: "ADD", payload: item });
   };
   const removeItem = (id) => {
-    dispatchCart({ type: "REMOVE", payload: id, });
+    dispatchCart({ type: "REMOVE", payload: id });
+  };
+  const resetCart = () => {
+    dispatchCart({ type: "RESET" });
   };
 
   const cartCtxValue = {
@@ -110,11 +115,10 @@ export default function CartCxtProvider({ children }) {
     totalAmount: cartState.totalAmount,
     addItem,
     removeItem,
+    resetCart,
   };
 
   return (
-    <CartContext.Provider value={cartCtxValue}>
-      {children}
-    </CartContext.Provider>
+    <CartContext.Provider value={cartCtxValue}>{children}</CartContext.Provider>
   );
 }
